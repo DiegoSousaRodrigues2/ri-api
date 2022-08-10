@@ -1,5 +1,7 @@
 package br.com.fiap.riapi.domains;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;

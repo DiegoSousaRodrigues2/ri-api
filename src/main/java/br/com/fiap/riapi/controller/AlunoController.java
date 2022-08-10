@@ -5,6 +5,8 @@ import br.com.fiap.riapi.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,4 +21,30 @@ public class AlunoController {
 
     }
 
+    public String save(Aluno aluno) {
+
+        if(Birthday(aluno.getDtNascimento()) < 18){
+            return "Not of age";
+        }
+
+        alunoService.save(aluno);
+        return null;
+    }
+
+    private int Birthday(Date birthday) {
+        Calendar dataNascimento = Calendar.getInstance();
+        dataNascimento.setTime(birthday);
+        Calendar hoje = Calendar.getInstance();
+        int idade = hoje.get(Calendar.YEAR) - dataNascimento.get(Calendar.YEAR);
+        if (hoje.get(Calendar.MONTH) < dataNascimento.get(Calendar.MONTH)) {
+            idade--;
+        }
+        else
+        {
+            if (hoje.get(Calendar.MONTH) == dataNascimento.get(Calendar.MONTH) && hoje.get(Calendar.DAY_OF_MONTH) < dataNascimento.get(Calendar.DAY_OF_MONTH)) {
+                idade--;
+            }
+        }
+        return idade;
+    }
 }
