@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlunoController {
@@ -28,6 +29,13 @@ public class AlunoController {
         }
 
         alunoService.save(aluno);
+        return "ok";
+    }
+
+    public String update(Aluno aluno){
+
+
+
         return null;
     }
 
