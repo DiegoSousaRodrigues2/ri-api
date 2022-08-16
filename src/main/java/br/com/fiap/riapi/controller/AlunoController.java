@@ -1,5 +1,6 @@
 package br.com.fiap.riapi.controller;
 
+import br.com.fiap.riapi.command.AlunoCommand;
 import br.com.fiap.riapi.domains.Aluno;
 import br.com.fiap.riapi.services.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,21 @@ public class AlunoController {
         return "ok";
     }
 
-    public String update(Aluno aluno){
+    public String update(AlunoCommand alunoCommand, Integer id){
 
-        if(aluno.getCdAluno() == null){
+        if(id == null){
             return "has no identifier";
         }
 
-        if(findById(aluno.getCdAluno()).isEmpty() == true){
+        if(findById(id).isEmpty()){
             return "identifier does not exist";
         }
+
+        Aluno aluno = new Aluno();
+        aluno.setCdAluno(id);
+        aluno.setNmAluno(alunoCommand.getNmAluno());
+        aluno.setDtNascimento(alunoCommand.getDtNascimento());
+        aluno.setStAluno(alunoCommand.getStAluno());
 
         save(aluno);
 

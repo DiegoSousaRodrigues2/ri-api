@@ -1,13 +1,13 @@
 package br.com.fiap.riapi;
 
+import br.com.fiap.riapi.command.AlunoCommand;
 import br.com.fiap.riapi.controller.AlunoController;
 import br.com.fiap.riapi.domains.Aluno;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/aluno/")
 public class UrlMappings {
 
     @Autowired
@@ -22,18 +23,18 @@ public class UrlMappings {
 
     Map<String, Object> response = new HashMap<>();
 
-    @GetMapping("/aluno/getAll")
+    @GetMapping("getAll")
     public List<Aluno> getAllAluno(){
         return alunoController.getAllAluno();
     }
 
-    @GetMapping("/aluno/getById")
-    public Optional<Aluno> getById(@RequestParam @Valid Integer cdAluno){
-        return alunoController.findById(cdAluno);
+    @GetMapping("getById")
+    public ResponseEntity<Aluno> getById(@RequestParam @Valid Integer cdAluno){
+        return ResponseEntity.of(alunoController.findById(cdAluno));
     }
 
-    @PostMapping("/aluno/create")
-    public ResponseEntity createAluno(@RequestBody @Valid Aluno aluno){
+    @PostMapping("create")
+    public ResponseEntity<Object> createAluno(@RequestBody @Valid Aluno aluno){
 
         String message = alunoController.save(aluno);
 
@@ -43,21 +44,24 @@ public class UrlMappings {
         return null;
     }
 
-    @PutMapping("/aluno/update")
-    public ResponseEntity updateAluno(@RequestBody @Valid Aluno aluno){
+    @PutMapping("update")
+    public ResponseEntity<Object> updateAluno(@RequestBody @Valid AlunoCommand alunoCommand , @RequestParam Integer id){
 
-        String message = alunoController.update(aluno);
+        String message = alunoController.update(alunoCommand, id);
 
-        if(message.equals("ok")){
-            return ResponseEntity.status(HttpStatus.CREATED).body(aluno);
-        }else if (message.equals("has no identifier")){
-            response.put("Message", "Informe o Id");
-            response.put("Status", HttpStatus.BAD_REQUEST);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }else if (message.equals("identifier does not exist")){
-            response.put("Message", "Id não encontrado");
-            response.put("Status", HttpStatus.BAD_REQUEST);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        switch (message) {
+            case "ok":
+                return ResponseEntity.status(HttpStatus.CREATED).body(alunoCommand);
+
+            case "has no identifier":
+                response.put("Message", "Informe o Id");
+                response.put("Status", HttpStatus.BAD_REQUEST);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+            case "identifier does not exist":
+                response.put("Message", "Id não encontrado");
+                response.put("Status", HttpStatus.BAD_REQUEST);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
         return null;
     }
