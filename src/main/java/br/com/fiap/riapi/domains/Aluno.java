@@ -47,7 +47,7 @@ public class Aluno {
 
     //Mapeamento Bidirecional InstituicaoAluno
     @OneToMany(mappedBy = "aluno")
-    private List<InstituicaoAluno> insttuicaoAlunoList;
+    private List<InstituicaoAluno> instituicaoAlunoList;
 
     @OneToMany(mappedBy = "materia")
     private List<AvaliacaoDiaria> avaliacaoDiariaList;
@@ -85,10 +85,10 @@ public class Aluno {
     }
 
     public List<InstituicaoAluno> getInsttuicaoAlunoList() {
-        return insttuicaoAlunoList;
+        return instituicaoAlunoList;
     }
 
     public void setInsttuicaoAlunoList(List<InstituicaoAluno> insttuicaoAlunoList) {
-        this.insttuicaoAlunoList = insttuicaoAlunoList;
+        this.instituicaoAlunoList = insttuicaoAlunoList;
     }
 }

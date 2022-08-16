@@ -12,17 +12,24 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class UrlMappings {
-    Map<String, String> response = new HashMap<>();
 
     @Autowired
     private AlunoController alunoController;
 
+    Map<String, Object> response = new HashMap<>();
+
     @GetMapping("/aluno/getAll")
     public List<Aluno> getAllAluno(){
         return alunoController.getAllAluno();
+    }
+
+    @GetMapping("/aluno/getById")
+    public Optional<Aluno> getById(@RequestParam @Valid Integer cdAluno){
+        return alunoController.findById(cdAluno);
     }
 
     @PostMapping("/aluno/create")
@@ -32,28 +39,27 @@ public class UrlMappings {
 
         if(message.equals("ok")){
             return ResponseEntity.status(HttpStatus.CREATED).body(aluno);
-        }else{
-            response.put("Message", "Idade menor que 18 anos");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+        return null;
     }
 
     @PutMapping("/aluno/update")
     public ResponseEntity updateAluno(@RequestBody @Valid Aluno aluno){
 
-        if(aluno.getCdAluno() == null){
-            response.put("Message", "Informe o Id");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        String message = alunoController.save(aluno);
+        String message = alunoController.update(aluno);
 
         if(message.equals("ok")){
             return ResponseEntity.status(HttpStatus.CREATED).body(aluno);
-        }else{
-            response.put("Message", "Idade menor que 18 anos");
+        }else if (message.equals("has no identifier")){
+            response.put("Message", "Informe o Id");
+            response.put("Status", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }else if (message.equals("identifier does not exist")){
+            response.put("Message", "Id não encontrado");
+            response.put("Status", HttpStatus.BAD_REQUEST);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+        return null;
     }
 
 }
