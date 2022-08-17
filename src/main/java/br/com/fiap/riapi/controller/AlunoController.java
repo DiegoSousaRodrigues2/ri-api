@@ -3,11 +3,11 @@ package br.com.fiap.riapi.controller;
 import br.com.fiap.riapi.command.AlunoCommand;
 import br.com.fiap.riapi.domains.Aluno;
 import br.com.fiap.riapi.services.AlunoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.*;
 
 @Service
@@ -39,13 +39,10 @@ public class AlunoController {
         }
 
         Aluno aluno = new Aluno();
+        BeanUtils.copyProperties(alunoCommand, aluno);
         aluno.setCdAluno(id);
-        aluno.setNmAluno(alunoCommand.getNmAluno());
-        aluno.setDtNascimento(alunoCommand.getDtNascimento());
-        aluno.setStAluno(alunoCommand.getStAluno());
 
         save(aluno);
-
         return "ok";
     }
 
@@ -68,5 +65,26 @@ public class AlunoController {
 
     public Optional<Aluno> findById(Integer cdAluno) {
         return alunoService.findById(cdAluno);
+    }
+
+    private void copiar(File origem, OutputStream destino) {
+        int bite = 0; byte[]
+                tamanhoMaximo = new byte[1024 * 8]; // 8KB
+        try {
+            // enquanto bytes forem sendo lidos
+            while((bite = origem.read(tamanhoMaximo)) >= 0) {
+                // pegue o byte lido e escreva no destino
+                destino.write(tamanhoMaximo, 0, bite);
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block e.printStackTrace();
+        }
+    }
+
+    public void upload(String pasta, String nomeDoArquivo, File arquivoCarregado) throws FileNotFoundException {
+        String caminhoArquivo = pasta + "/" + nomeDoArquivo;
+        File novoArquivo = new File(caminhoArquivo);
+        FileOutputStream saida = new FileOutputStream(novoArquivo);
+        copiar(arquivoCarregado, saida);
     }
 }

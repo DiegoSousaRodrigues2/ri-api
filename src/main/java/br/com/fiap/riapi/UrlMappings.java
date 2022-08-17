@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,12 @@ public class UrlMappings {
 
     Map<String, Object> response = new HashMap<>();
 
+
+    /*
+    *
+    * API DIRECIONADA PARA CONSUMO DA BASE DE ALUNOS
+    *
+    */
     @GetMapping("getAll")
     public List<Aluno> getAllAluno(){
         return alunoController.getAllAluno();
@@ -65,5 +72,16 @@ public class UrlMappings {
         }
         return null;
     }
+
+    @PostMapping("upload")
+    public void upload(File upload) {
+        alunoController.upload("/home/matheus/arquivos", upload.getName(), upload);
+    }
+
+    /*
+     *
+     * API DIRECIONADA PARA LEITURA DO AUDIO QUE O ALUNO PASSAR
+     *
+     */
 
 }

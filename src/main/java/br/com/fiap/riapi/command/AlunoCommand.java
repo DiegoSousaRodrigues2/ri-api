@@ -1,5 +1,6 @@
 package br.com.fiap.riapi.command;
 
+import java.io.*;
 import java.sql.Date;
 
 public class AlunoCommand {
@@ -30,4 +31,5 @@ public class AlunoCommand {
     public void setStAluno(Boolean stAluno) {
         this.stAluno = stAluno;
     }
+
 }
