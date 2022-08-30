@@ -2,7 +2,9 @@ package br.com.fiap.riapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+@EntityScan(basePackages = {"br.com.fiap.riapi.domains"})
 @SpringBootApplication
 public class RiApiApplication {
 

@@ -1,13 +1,14 @@
 package br.com.fiap.riapi.controller;
 
+import br.com.fiap.riapi.command.AlunoCommand;
 import br.com.fiap.riapi.domains.Aluno;
 import br.com.fiap.riapi.services.AlunoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 @Service
 public class AlunoController {
@@ -17,18 +18,32 @@ public class AlunoController {
 
     public List<Aluno> getAllAluno(){
         return alunoService.findAll();
-
-
     }
 
     public String save(Aluno aluno) {
-
         if(Birthday(aluno.getDtNascimento()) < 18){
             return "Not of age";
         }
-
         alunoService.save(aluno);
-        return null;
+        return "ok";
+    }
+
+    public String update(AlunoCommand alunoCommand, Integer id){
+
+        if(id == null){
+            return "has no identifier";
+        }
+
+        if(findById(id).isEmpty()){
+            return "identifier does not exist";
+        }
+
+        Aluno aluno = new Aluno();
+        BeanUtils.copyProperties(alunoCommand, aluno);
+        aluno.setCdAluno(id);
+
+        save(aluno);
+        return "ok";
     }
 
     private int Birthday(Date birthday) {
@@ -47,4 +62,9 @@ public class AlunoController {
         }
         return idade;
     }
+
+    public Optional<Aluno> findById(Integer cdAluno) {
+        return alunoService.findById(cdAluno);
+    }
+
 }
