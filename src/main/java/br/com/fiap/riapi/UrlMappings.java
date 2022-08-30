@@ -24,12 +24,12 @@ public class UrlMappings {
 
     Map<String, Object> response = new HashMap<>();
 
-
     /*
     *
     * API DIRECIONADA PARA CONSUMO DA BASE DE ALUNOS
     *
     */
+
     @GetMapping("getAll")
     public List<Aluno> getAllAluno(){
         return alunoController.getAllAluno();
@@ -45,6 +45,7 @@ public class UrlMappings {
 
         String message = alunoController.save(aluno);
 
+        //TODO fazer retorno para status não OK
         if(message.equals("ok")){
             return ResponseEntity.status(HttpStatus.CREATED).body(aluno);
         }
@@ -71,11 +72,6 @@ public class UrlMappings {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
         return null;
-    }
-
-    @PostMapping("upload")
-    public void upload(File upload) {
-        alunoController.upload("/home/matheus/arquivos", upload.getName(), upload);
     }
 
     /*
