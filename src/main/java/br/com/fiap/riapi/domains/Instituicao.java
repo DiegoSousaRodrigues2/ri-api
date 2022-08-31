@@ -1,6 +1,7 @@
 package br.com.fiap.riapi.domains;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,18 +14,20 @@ public class Instituicao {
     }
 
     //Construtor sem id
-    public Instituicao(String nmInstituicao, String nrCnpj, String ds_plano) {
+    public Instituicao(String nmInstituicao, String nrCnpj, String ds_plano, String dsToken) {
         this.nmInstituicao = nmInstituicao;
         this.nrCnpj = nrCnpj;
         this.ds_plano = ds_plano;
+        this.dsToken = dsToken;
     }
 
     //Construtor completo
-    public Instituicao(Integer cdInstituicao, String nmInstituicao, String nrCnpj, String ds_plano) {
+    public Instituicao(Integer cdInstituicao, String nmInstituicao, String nrCnpj, String ds_plano, String dsToken) {
         this.cdInstituicao = cdInstituicao;
         this.nmInstituicao = nmInstituicao;
         this.nrCnpj = nrCnpj;
         this.ds_plano = ds_plano;
+        this.dsToken = dsToken;
     }
 
     @Id
@@ -32,22 +35,20 @@ public class Instituicao {
     @GeneratedValue(generator = "instituicao", strategy = GenerationType.SEQUENCE)
     private Integer cdInstituicao;
 
-    @Column(name = "nm_instituicao", nullable = false, length = 50)
+    @Column(name = "nm_instituicao", nullable = false, length = 150, unique = true)
     private String nmInstituicao;
 
-    @Column(name = "nr_cnpj", nullable = false, length = 18)
+    @Column(name = "nr_cnpj", nullable = false, length = 18, unique = true)
     private String nrCnpj;
 
     @Column(name = "ds_plano", nullable = true, length = 50)
     private String ds_plano;
 
-    //Mapeamento Bidirecional InstituicaoProfessor
-    @OneToMany(mappedBy = "instituicao")
-    private List<InstituicaoProfessor> instituicaoProfessorList;
+    @Column(name = "ds_token", nullable = false, length = 6)
+    private String dsToken;
 
-    //Mapeamento Bidirecional InstituicaoAluno
-    @OneToMany(mappedBy = "instituicao")
-    private List<InstituicaoAluno> insttuicaoAlunoList;
+    @OneToMany(mappedBy = "instituicao", cascade = CascadeType.ALL)
+    private List<Conta> contaList = new ArrayList<Conta>();
 
     public Integer getCdInstituicao() {
         return cdInstituicao;
@@ -79,5 +80,21 @@ public class Instituicao {
 
     public void setDs_plano(String ds_plano) {
         this.ds_plano = ds_plano;
+    }
+
+    public String getDsToken() {
+        return dsToken;
+    }
+
+    public void setDsToken(String dsToken) {
+        this.dsToken = dsToken;
+    }
+
+    public List<Conta> getContaList() {
+        return contaList;
+    }
+
+    public void setContaList(List<Conta> contaList) {
+        this.contaList = contaList;
     }
 }
