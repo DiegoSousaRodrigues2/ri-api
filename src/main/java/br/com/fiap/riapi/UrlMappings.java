@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.io.File;
 import java.util.HashMap;
@@ -16,7 +17,6 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/aluno/")
 public class UrlMappings {
 
     @Autowired
@@ -24,36 +24,32 @@ public class UrlMappings {
 
     Map<String, Object> response = new HashMap<>();
 
-    /*
-    *
-    * API DIRECIONADA PARA CONSUMO DA BASE DE ALUNOS
-    *
-    */
+    //API DIRECIONADA PARA CONSUMO DA BASE DE ALUNOS
 
-    @GetMapping("getAll")
-    public List<Aluno> getAllAluno(){
+    @GetMapping("/aluno/getAll")
+    public List<Aluno> getAllAluno() {
         return alunoController.getAllAluno();
     }
 
-    @GetMapping("getById")
-    public ResponseEntity<Aluno> getById(@RequestParam @Valid Integer cdAluno){
+    @GetMapping("/aluno/getById")
+    public ResponseEntity<Aluno> getById(@RequestParam @Valid Integer cdAluno) {
         return ResponseEntity.of(alunoController.findById(cdAluno));
     }
 
-    @PostMapping("create")
-    public ResponseEntity<Object> createAluno(@RequestBody @Valid Aluno aluno){
+    @PostMapping("/aluno/create")
+    public ResponseEntity<Object> createAluno(@RequestBody @Valid Aluno aluno) {
 
         String message = alunoController.save(aluno);
 
         //TODO fazer retorno para status não OK
-        if(message.equals("ok")){
+        if (message.equals("ok")) {
             return ResponseEntity.status(HttpStatus.CREATED).body(aluno);
         }
         return null;
     }
 
-    @PutMapping("update")
-    public ResponseEntity<Object> updateAluno(@RequestBody @Valid AlunoCommand alunoCommand , @RequestParam Integer id){
+    @PutMapping("/aluno/update")
+    public ResponseEntity<Object> updateAluno(@RequestBody @Valid AlunoCommand alunoCommand, @RequestParam Integer id) {
 
         String message = alunoController.update(alunoCommand, id);
 
@@ -74,10 +70,13 @@ public class UrlMappings {
         return null;
     }
 
-    /*
-     *
-     * API DIRECIONADA PARA LEITURA DO AUDIO QUE O ALUNO PASSAR
-     *
-     */
+    //API DIRECIONADA PARA CONSUMO DA BASE DE INSTITUIÇÃO
+
+
+
+
+
+
+
 
 }
