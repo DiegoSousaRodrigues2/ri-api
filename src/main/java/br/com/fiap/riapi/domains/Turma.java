@@ -1,6 +1,7 @@
 package br.com.fiap.riapi.domains;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -58,8 +59,5 @@ public class Turma {
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
-
-
-    //TODO bidirectional
 
 }

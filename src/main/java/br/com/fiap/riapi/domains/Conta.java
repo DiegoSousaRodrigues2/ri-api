@@ -3,6 +3,8 @@ package br.com.fiap.riapi.domains;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "T_RATE_CONTA")
@@ -60,9 +62,33 @@ public class Conta {
     @Column(name = "ds_tipo_conta", nullable = false, length = 1)
     private String dsTipoConta;
 
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
+    private List<TurmaConta> turmaContaList = new ArrayList<TurmaConta>();
+
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
+    private List<AvaliacaoDiaria> avaliacaoDiariaList = new ArrayList<AvaliacaoDiaria>();
+
     @ManyToOne
     @JoinColumn(name = "cd_instituicao", nullable = false)
     private Instituicao instituicao;
+
+    public List<TurmaConta> getTurmaContaList() {
+        return turmaContaList;
+    }
+
+    public Conta setTurmaContaList(List<TurmaConta> turmaContaList) {
+        this.turmaContaList = turmaContaList;
+        return this;
+    }
+
+    public List<AvaliacaoDiaria> getAvaliacaoDiariaList() {
+        return avaliacaoDiariaList;
+    }
+
+    public Conta setAvaliacaoDiariaList(List<AvaliacaoDiaria> avaliacaoDiariaList) {
+        this.avaliacaoDiariaList = avaliacaoDiariaList;
+        return this;
+    }
 
     public Integer getCdConta() {
         return cdConta;

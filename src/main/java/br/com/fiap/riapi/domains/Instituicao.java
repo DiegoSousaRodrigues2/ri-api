@@ -44,7 +44,7 @@ public class Instituicao {
     @Column(name = "ds_plano", nullable = true, length = 50)
     private String ds_plano;
 
-    @Column(name = "ds_token", nullable = false, length = 6)
+    @Column(name = "ds_token", nullable = false, length = 6, unique = true)
     private String dsToken;
 
     @OneToMany(mappedBy = "instituicao", cascade = CascadeType.ALL)

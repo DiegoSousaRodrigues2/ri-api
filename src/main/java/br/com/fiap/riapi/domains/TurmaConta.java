@@ -11,13 +11,13 @@ public class TurmaConta {
     }
 
     public TurmaConta(Conta cdConta, Turma turma) {
-        this.cdConta = cdConta;
+        this.conta = cdConta;
         this.turma = turma;
     }
 
     public TurmaConta(Integer cdTurmaConta, Conta cdConta, Turma turma) {
         this.cdTurmaConta = cdTurmaConta;
-        this.cdConta = cdConta;
+        this.conta = cdConta;
         this.turma = turma;
     }
 
@@ -28,7 +28,7 @@ public class TurmaConta {
 
     @ManyToOne
     @JoinColumn(name = "cd_conta", nullable = false)
-    private Conta cdConta;
+    private Conta conta;
 
     @ManyToOne
     @JoinColumn(name = "cd_turma", nullable = false)
@@ -44,11 +44,11 @@ public class TurmaConta {
     }
 
     public Conta getCdConta() {
-        return cdConta;
+        return conta;
     }
 
     public TurmaConta setCdConta(Conta cdConta) {
-        this.cdConta = cdConta;
+        this.conta = cdConta;
         return this;
     }
 
