@@ -35,12 +35,6 @@ public class Turma {
     @JoinColumn(name = "cd_curso",nullable = false)
     public Curso curso;
 
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
-    private List<TurmaProfessor> turmaProfessorList;
-
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
-    private List<TurmaAluno> turmaAlunoList;
-
     public Integer getCdTurma() {
         return cdTurma;
     }
@@ -65,11 +59,7 @@ public class Turma {
         this.curso = curso;
     }
 
-    public List<TurmaProfessor> getTurmaProfessorList() {
-        return turmaProfessorList;
-    }
 
-    public void setTurmaProfessorList(List<TurmaProfessor> turmaProfessorList) {
-        this.turmaProfessorList = turmaProfessorList;
-    }
+    //TODO bidirectional
+
 }

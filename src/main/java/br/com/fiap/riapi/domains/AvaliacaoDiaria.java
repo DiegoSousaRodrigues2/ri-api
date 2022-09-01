@@ -11,17 +11,17 @@ public class AvaliacaoDiaria {
     public AvaliacaoDiaria() {
     }
 
-    public AvaliacaoDiaria(Aluno aluno, Materia materia, String dsAvaliacao, Integer nrEstrela, Date dtAvaliacao) {
-        this.aluno = aluno;
+    public AvaliacaoDiaria(Conta conta, Materia materia, String dsAvaliacao, Integer nrEstrela, Date dtAvaliacao) {
+        this.conta = conta;
         this.materia = materia;
         this.dsAvaliacao = dsAvaliacao;
         this.nrEstrela = nrEstrela;
         this.dtAvaliacao = dtAvaliacao;
     }
 
-    public AvaliacaoDiaria(Integer cdAvaliacaoDiaria, Aluno aluno, Materia materia, String dsAvaliacao, Integer nrEstrela, Date dtAvaliacao) {
+    public AvaliacaoDiaria(Integer cdAvaliacaoDiaria, Conta conta, Materia materia, String dsAvaliacao, Integer nrEstrela, Date dtAvaliacao) {
         this.cdAvaliacaoDiaria = cdAvaliacaoDiaria;
-        this.aluno = aluno;
+        this.conta = conta;
         this.materia = materia;
         this.dsAvaliacao = dsAvaliacao;
         this.nrEstrela = nrEstrela;
@@ -34,8 +34,8 @@ public class AvaliacaoDiaria {
     private Integer cdAvaliacaoDiaria;
 
     @ManyToOne
-    @JoinColumn(name = "cd_aluno", nullable = false)
-    private Aluno aluno;
+    @JoinColumn(name = "cd_conta", nullable = false)
+    private Conta conta;
 
     @ManyToOne
     @JoinColumn(name = "cd_materia", nullable = false)
@@ -54,23 +54,53 @@ public class AvaliacaoDiaria {
         return cdAvaliacaoDiaria;
     }
 
-    public void setCdAvaliacaoDiaria(Integer cdAvaliacaoDiaria) {
+    public AvaliacaoDiaria setCdAvaliacaoDiaria(Integer cdAvaliacaoDiaria) {
         this.cdAvaliacaoDiaria = cdAvaliacaoDiaria;
+        return this;
     }
 
-    public Aluno getAluno() {
-        return aluno;
+    public Conta getConta() {
+        return conta;
     }
 
-    public void setAluno(Aluno aluno) {
-        this.aluno = aluno;
+    public AvaliacaoDiaria setConta(Conta conta) {
+        this.conta = conta;
+        return this;
     }
 
     public Materia getMateria() {
         return materia;
     }
 
-    public void setMateria(Materia materia) {
+    public AvaliacaoDiaria setMateria(Materia materia) {
         this.materia = materia;
+        return this;
+    }
+
+    public String getDsAvaliacao() {
+        return dsAvaliacao;
+    }
+
+    public AvaliacaoDiaria setDsAvaliacao(String dsAvaliacao) {
+        this.dsAvaliacao = dsAvaliacao;
+        return this;
+    }
+
+    public Integer getNrEstrela() {
+        return nrEstrela;
+    }
+
+    public AvaliacaoDiaria setNrEstrela(Integer nrEstrela) {
+        this.nrEstrela = nrEstrela;
+        return this;
+    }
+
+    public Date getDtAvaliacao() {
+        return dtAvaliacao;
+    }
+
+    public AvaliacaoDiaria setDtAvaliacao(Date dtAvaliacao) {
+        this.dtAvaliacao = dtAvaliacao;
+        return this;
     }
 }
