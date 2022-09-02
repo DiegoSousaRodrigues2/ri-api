@@ -17,7 +17,7 @@ public class Instituicao {
     public Instituicao(String nmInstituicao, String nrCnpj, String ds_plano, String dsToken) {
         this.nmInstituicao = nmInstituicao;
         this.nrCnpj = nrCnpj;
-        this.ds_plano = ds_plano;
+        this.dsPlano = ds_plano;
         this.dsToken = dsToken;
     }
 
@@ -26,7 +26,7 @@ public class Instituicao {
         this.cdInstituicao = cdInstituicao;
         this.nmInstituicao = nmInstituicao;
         this.nrCnpj = nrCnpj;
-        this.ds_plano = ds_plano;
+        this.dsPlano = ds_plano;
         this.dsToken = dsToken;
     }
 
@@ -42,7 +42,7 @@ public class Instituicao {
     private String nrCnpj;
 
     @Column(name = "ds_plano", nullable = true, length = 50)
-    private String ds_plano;
+    private String dsPlano;
 
     @Column(name = "ds_token", nullable = false, length = 6, unique = true)
     private String dsToken;
@@ -74,12 +74,12 @@ public class Instituicao {
         this.nrCnpj = nrCnpj;
     }
 
-    public String getDs_plano() {
-        return ds_plano;
+    public String getDsPlano() {
+        return dsPlano;
     }
 
-    public void setDs_plano(String ds_plano) {
-        this.ds_plano = ds_plano;
+    public void setDsPlano(String ds_plano) {
+        this.dsPlano = ds_plano;
     }
 
     public String getDsToken() {

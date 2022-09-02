@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.Optional;
 
 @Service
@@ -15,7 +14,6 @@ public class InstituicaoService {
 
     @Autowired
     InstituicaoRepository instituicaoRepository;
-    private EntityManager session;
 
     public Page<Instituicao> listAll(Pageable pageable) {
         return instituicaoRepository.findAll(pageable);
@@ -26,16 +24,15 @@ public class InstituicaoService {
     }
 
     public String save(Instituicao instituicao) {
-        if(findByName(instituicao.getNmInstituicao())){
-            System.out.println("teste");
+        if (instituicaoRepository.findByDsEmail(instituicao.getNmInstituicao()).size() > 0) {
+            return "duplicated name";
+        }else if(instituicaoRepository.findByNrCnpj(instituicao.getNrCnpj()).size() > 0){
+            return "duplicated document";
+        }else if(instituicaoRepository.findByDsToken(instituicao.getDsToken()).size() > 0){
+            return "duplicated Token";
         }
         instituicaoRepository.save(instituicao);
         return "ok";
     }
 
-    public boolean findByName(String nmInstituicao) {
-        var query = session.createQuery("from Instituicao where nmInstituicao like :nmInstituicao");
-        query.setParameter("nmInstituicao", nmInstituicao);
-        return query.getResultList().size() <= 0;
-    }
 }
