@@ -35,34 +35,45 @@ public class InstituicaoController {
     public ResponseEntity<Object> create(@RequestBody @Valid @NotNull Instituicao instituicao){
         instituicao.setContaList(new ArrayList<>());
 
-        ResponseEntity<Object> response = validateIntituicaoCreate(instituicao);
-        if(response != null){
+        ResponseEntity<Object> response = instituicaoService.validateIntituicao(instituicao);
+        if(response != null) {
             return response;
         }
 
+        instituicaoService.save(instituicao);
         return ResponseEntity.status(HttpStatus.CREATED).body(instituicao);
     }
 
-    public ResponseEntity<Object> validateIntituicaoCreate(Instituicao instituicao){
-        String response = instituicaoService.save(instituicao);
-
-        Map<String, Object> responseMap = new HashMap<>();
-
-        if(!response.equals("ok")) {
-            responseMap.put("status", HttpStatus.BAD_REQUEST);
-            responseMap.put("message", response);
-            if (response.equals("duplicated name")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
-            } else if (response.equals("duplicated document")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
-            } else if (instituicao.getDsToken() != null && (!instituicao.getDsPlano().toLowerCase().equals("basico") || !instituicao.getDsPlano().toLowerCase().equals("pro"))) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
-            } else if (response.equals("duplicated token")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
-            }
-
-            //TODO criar validador de CNPJ
+    @PutMapping("update")
+    public ResponseEntity<Object> update(@RequestBody @Valid Instituicao instituicao, @RequestParam Integer id){
+        ResponseEntity<Object> response = instituicaoService.validateIntituicaoUpdate(instituicao, id);
+        if(response != null) {
+            return response;
         }
-        return null;
+        instituicao.setCdInstituicao(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(instituicao);
     }
+
+    @DeleteMapping("delete")
+    public ResponseEntity<Object> delete(@RequestParam @Valid Integer id){
+        return instituicaoService.deleteById(id);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

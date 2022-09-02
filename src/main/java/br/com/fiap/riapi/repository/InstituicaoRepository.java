@@ -10,7 +10,7 @@ import java.util.List;
 public interface InstituicaoRepository extends JpaRepository<Instituicao, Integer> {
 
     @Query(value = "select i from Instituicao i where i.nmInstituicao = ?1")
-    List<Instituicao> findByDsEmail(String nmInstituicao);
+    List<Instituicao> findByNmInstituicao(String nmInstituicao);
 
     @Query(value = "select i from Instituicao i where i.nrCnpj = ?1")
     List<Instituicao> findByNrCnpj(String nrCnpj);
