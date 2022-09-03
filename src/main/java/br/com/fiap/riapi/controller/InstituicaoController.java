@@ -23,7 +23,11 @@ public class InstituicaoController {
 
     @GetMapping("")
     public Page<Instituicao> getAll(@PageableDefault(size = 10) Pageable pageable) {
-        return instituicaoService.listAll(pageable);
+        Page<Instituicao> instituicaos = instituicaoService.listAll(pageable);
+
+        instituicaos.getSize();
+
+        return instituicaos;
     }
 
     @GetMapping("getById")
@@ -33,7 +37,7 @@ public class InstituicaoController {
 
     @PostMapping("create")
     public ResponseEntity<Object> create(@RequestBody @Valid @NotNull Instituicao instituicao){
-        instituicao.setContaList(new ArrayList<>());
+//        instituicao.setContaList(new ArrayList<>());
 
         ResponseEntity<Object> response = instituicaoService.validateIntituicao(instituicao);
         if(response != null) {

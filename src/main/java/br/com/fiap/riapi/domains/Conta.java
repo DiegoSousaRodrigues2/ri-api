@@ -1,7 +1,10 @@
 package br.com.fiap.riapi.domains;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "T_RATE_CONTA")
 @SequenceGenerator(name = "conta", sequenceName = "SQ_TB_CONTA", allocationSize = 1)
-public class Conta {
+public class Conta implements Serializable {
 
     public Conta() {
     }
@@ -44,13 +47,13 @@ public class Conta {
     @Column(name = "nm_conta", nullable = false, length = 150)
     private String nmConta;
 
-    @Column(name = "ds_email", nullable = false, length = 150)
+    @Column(name = "ds_email", nullable = false, length = 150, unique = true)
     private String dsEmail;
 
     @Column(name = "ds_senha", nullable = false, length = 150)
     private String dsSenha;
 
-    @Column(name = "ds_documento", nullable = false, length = 150)
+    @Column(name = "ds_documento", nullable = false, length = 150, unique = true)
     private String dsDocumento;
 
     @Column(name = "dt_nascimento", nullable = false)
@@ -62,13 +65,15 @@ public class Conta {
     @Column(name = "ds_tipo_conta", nullable = false, length = 1)
     private String dsTipoConta;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
     private List<TurmaConta> turmaContaList = new ArrayList<TurmaConta>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
     private List<AvaliacaoDiaria> avaliacaoDiariaList = new ArrayList<AvaliacaoDiaria>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "cd_instituicao", nullable = false)
     private Instituicao instituicao;
 

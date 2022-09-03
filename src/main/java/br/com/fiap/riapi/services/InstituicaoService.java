@@ -26,11 +26,9 @@ public class InstituicaoService {
     public Page<Instituicao> listAll(Pageable pageable) {
         return instituicaoRepository.findAll(pageable);
     }
-
     public Optional<Instituicao> findById(Integer id) {
         return instituicaoRepository.findById(id);
     }
-
     public void save(Instituicao instituicao){
         instituicaoRepository.save(instituicao);
     }
@@ -39,12 +37,15 @@ public class InstituicaoService {
         if (instituicaoRepository.findByNmInstituicao(instituicao.getNmInstituicao()).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "duplicated name");
+
         } else if (instituicaoRepository.findByNrCnpj(instituicao.getNrCnpj()).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "duplicated document");
+
         } else if (instituicaoRepository.findByDsToken(instituicao.getDsToken()).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "duplicated Token");
+
         } else {
             responseMap.clear();
         }

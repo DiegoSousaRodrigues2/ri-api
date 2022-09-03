@@ -1,13 +1,17 @@
 package br.com.fiap.riapi.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "T_RATE_INSTITUICAO")
 @SequenceGenerator(name = "instituicao", sequenceName = "SQ_TB_INSTITUICAO", allocationSize = 1)
-public class Instituicao {
+public class Instituicao implements Serializable {
 
     //Construtor padrão
     public Instituicao() {
@@ -47,6 +51,7 @@ public class Instituicao {
     @Column(name = "ds_token", nullable = false, length = 6, unique = true)
     private String dsToken;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "instituicao", cascade = CascadeType.ALL)
     private List<Conta> contaList = new ArrayList<Conta>();
 
