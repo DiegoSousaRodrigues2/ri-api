@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -31,14 +33,22 @@ public class ContaController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Object> create(@RequestBody @Valid Conta conta, String token){
+    public ResponseEntity<Object> create(@RequestBody @Valid Conta conta, @RequestParam String token){
         ResponseEntity<Object> response = contaService.validateConta(conta, token);
         if(response != null){
             return response;
         }
 
         conta.setInstituicao(contaService.findInstitutionByToken(token));
+        contaService.save(conta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(conta);
+    }
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Object> update(@RequestBody @Valid Conta conta, @RequestParam Integer cdConta){
+
+        ResponseEntity<Object> response = contaService.validateUpdateConta(conta, cdConta);
+
+        conta.setCdConta(cdConta);
+        return ResponseEntity.status(HttpStatus.OK).body(conta);
     }
 }

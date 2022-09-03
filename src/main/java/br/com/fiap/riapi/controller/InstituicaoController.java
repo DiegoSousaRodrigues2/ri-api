@@ -37,9 +37,8 @@ public class InstituicaoController {
 
     @PostMapping("create")
     public ResponseEntity<Object> create(@RequestBody @Valid @NotNull Instituicao instituicao){
-//        instituicao.setContaList(new ArrayList<>());
 
-        ResponseEntity<Object> response = instituicaoService.validateIntituicao(instituicao);
+        ResponseEntity<Object> response = instituicaoService.validateIntituicao(instituicao, null);
         if(response != null) {
             return response;
         }

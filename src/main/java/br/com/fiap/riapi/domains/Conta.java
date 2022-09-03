@@ -42,6 +42,7 @@ public class Conta implements Serializable {
 
     @Id
     @Column(name = "cd_conta")
+    @GeneratedValue(generator = "conta", strategy = GenerationType.SEQUENCE)
     private Integer cdConta;
 
     @Column(name = "nm_conta", nullable = false, length = 150)
@@ -73,7 +74,7 @@ public class Conta implements Serializable {
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
     private List<AvaliacaoDiaria> avaliacaoDiariaList = new ArrayList<AvaliacaoDiaria>();
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "cd_instituicao", nullable = false)
     private Instituicao instituicao;
 

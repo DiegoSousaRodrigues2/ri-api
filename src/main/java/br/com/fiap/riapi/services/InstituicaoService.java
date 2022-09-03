@@ -11,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class InstituicaoService {
@@ -26,23 +24,25 @@ public class InstituicaoService {
     public Page<Instituicao> listAll(Pageable pageable) {
         return instituicaoRepository.findAll(pageable);
     }
+
     public Optional<Instituicao> findById(Integer id) {
         return instituicaoRepository.findById(id);
     }
-    public void save(Instituicao instituicao){
+
+    public void save(Instituicao instituicao) {
         instituicaoRepository.save(instituicao);
     }
 
-    public ResponseEntity<Object> validateIntituicao(@NotNull Instituicao instituicao) {
-        if (instituicaoRepository.findByNmInstituicao(instituicao.getNmInstituicao()).size() > 0) {
+    public ResponseEntity<Object> validateIntituicao(Instituicao instituicao, Integer cdIntituicao) {
+        if (instituicaoRepository.findByNmInstituicao(instituicao.getNmInstituicao(), cdIntituicao).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "duplicated name");
 
-        } else if (instituicaoRepository.findByNrCnpj(instituicao.getNrCnpj()).size() > 0) {
+        } else if (instituicaoRepository.findByNrCnpj(instituicao.getNrCnpj(), cdIntituicao).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "duplicated document");
 
-        } else if (instituicaoRepository.findByDsToken(instituicao.getDsToken()).size() > 0) {
+        } else if (instituicaoRepository.findByDsToken(instituicao.getDsToken(), cdIntituicao).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "duplicated Token");
 
@@ -50,7 +50,7 @@ public class InstituicaoService {
             responseMap.clear();
         }
 
-        if(responseMap.size() > 0){
+        if (responseMap.size() > 0) {
             return ResponseEntity.status(HttpStatus.CREATED).body(responseMap);
         }
 
@@ -63,7 +63,7 @@ public class InstituicaoService {
         if (instituicao.getCdInstituicao() != null) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "automatically generated id");
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseMap);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
         }
 
         Optional<Instituicao> instituicaoOptional = findById(id);
@@ -78,12 +78,13 @@ public class InstituicaoService {
         BeanUtils.copyProperties(instituicao, newInstituicao);
         newInstituicao.setCdInstituicao(id);
 
-        ResponseEntity<Object> response = validateIntituicao(newInstituicao);
+        ResponseEntity<Object> response = validateIntituicao(newInstituicao, id);
         if(response != null) {
             return response;
         }
 
-        save(newInstituicao);
+
+        instituicaoRepository.save(newInstituicao);
         return null;
     }
 
