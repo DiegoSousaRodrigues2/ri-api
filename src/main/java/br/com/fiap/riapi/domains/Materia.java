@@ -1,5 +1,7 @@
 package br.com.fiap.riapi.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class Materia {
 
     @Id
     @Column(name = "cd_materia", nullable = false, precision = 3)
+    @GeneratedValue(generator = "materia", strategy = GenerationType.SEQUENCE)
     private Integer cdMateria;
 
     @Column(name = "nm_materia", nullable = false, length = 50)
@@ -35,9 +38,11 @@ public class Materia {
     @Column(name = "ds_materia", nullable = false, length = 200)
     private String dsMateria;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "materia")
     private List<CursoMateria> cursoMateriaList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "materia")
     private List<AvaliacaoDiaria> avaliacaoDiariaList;
 
