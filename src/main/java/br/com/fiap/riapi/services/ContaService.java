@@ -37,15 +37,15 @@ public class ContaService {
         return contaRepository.findAll(pageable);
     }
 
-    public ResponseEntity<Object> validateConta(Conta conta, String token) {
+    public ResponseEntity<Object> validateConta(Conta conta, String token, Integer cdConta) {
 
-        if (contaRepository.findByDsEmail(conta.getDsEmail()).size() > 0) {
+        if (contaRepository.findByDsEmail(conta.getDsEmail(), cdConta).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "email document");
-        } else if (contaRepository.findByDsDocumento(conta.getDsDocumento()).size() > 0) {
+        } else if (contaRepository.findByDsDocumento(conta.getDsDocumento(), cdConta).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "duplicated document");
-        } else if (instituicaoRepository.findByDsToken(token, null).size() == 0) {
+        } else if (instituicaoRepository.findByDsToken(token, cdConta).size() == 0) {
             responseMap.put("status", HttpStatus.NOT_FOUND);
             responseMap.put("message", "token not found");
         } else {
@@ -60,7 +60,7 @@ public class ContaService {
 
 
     public Instituicao findInstitutionByToken(String token) {
-        return instituicaoRepository.findByDsToken(token, null).get(0);
+        return instituicaoRepository.findByDsToken(token, 0).get(0);
     }
 
     public void save(Conta conta) {
@@ -79,8 +79,9 @@ public class ContaService {
         var newConta = contaOptional.get();
         BeanUtils.copyProperties(conta, newConta);
         newConta.setCdConta(cdConta);
+        newConta.setInstituicao(contaOptional.get().getInstituicao());
 
-        ResponseEntity<Object> response = validateConta(newConta, newConta.getInstituicao().getDsToken());
+        ResponseEntity<Object> response = validateConta(newConta, newConta.getInstituicao().getDsToken(), cdConta);
         if(response != null) {
             return response;
         }

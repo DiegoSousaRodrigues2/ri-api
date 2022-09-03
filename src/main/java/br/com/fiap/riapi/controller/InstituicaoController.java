@@ -38,7 +38,7 @@ public class InstituicaoController {
     @PostMapping("create")
     public ResponseEntity<Object> create(@RequestBody @Valid @NotNull Instituicao instituicao){
 
-        ResponseEntity<Object> response = instituicaoService.validateIntituicao(instituicao, null);
+        ResponseEntity<Object> response = instituicaoService.validateIntituicao(instituicao, 0);
         if(response != null) {
             return response;
         }

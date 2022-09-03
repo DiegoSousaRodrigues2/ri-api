@@ -34,7 +34,7 @@ public class ContaController {
 
     @PostMapping("create")
     public ResponseEntity<Object> create(@RequestBody @Valid Conta conta, @RequestParam String token){
-        ResponseEntity<Object> response = contaService.validateConta(conta, token);
+        ResponseEntity<Object> response = contaService.validateConta(conta, token, 0);
         if(response != null){
             return response;
         }
@@ -44,6 +44,7 @@ public class ContaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(conta);
     }
 
+    @PutMapping("update")
     public ResponseEntity<Object> update(@RequestBody @Valid Conta conta, @RequestParam Integer cdConta){
 
         ResponseEntity<Object> response = contaService.validateUpdateConta(conta, cdConta);
