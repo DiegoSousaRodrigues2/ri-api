@@ -52,4 +52,9 @@ public class ContaController {
         conta.setCdConta(cdConta);
         return ResponseEntity.status(HttpStatus.OK).body(conta);
     }
+
+    @GetMapping("oauth")
+    public String update(@RequestParam @Valid String email, @RequestParam String senha){
+        return contaService.oauth(email, senha);
+    }
 }

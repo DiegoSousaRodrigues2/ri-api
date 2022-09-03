@@ -1,5 +1,7 @@
 package br.com.fiap.riapi.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,13 +15,13 @@ public class Curso {
     }
 
     //Construtor sem id
-    public Curso(String nmCurso, Integer nmPeriodo) {
+    public Curso(String nmCurso, String nmPeriodo) {
         this.nmCurso = nmCurso;
         this.nmPeriodo = nmPeriodo;
     }
 
     //Construtor completo
-    public Curso(Integer cdCurso, String nmCurso, Integer nmPeriodo) {
+    public Curso(Integer cdCurso, String nmCurso, String nmPeriodo) {
         this.cdCurso = cdCurso;
         this.nmCurso = nmCurso;
         this.nmPeriodo = nmPeriodo;
@@ -33,13 +35,15 @@ public class Curso {
     @Column(name = "nm_curso", nullable = false, length = 50)
     private String nmCurso;
 
-    @Column(name = "nm_periodo", nullable = false, length = 3)
-    private Integer nmPeriodo;
+    @Column(name = "nm_periodo", nullable = false, length = 50)
+    private String nmPeriodo;
 
-    @OneToMany(mappedBy = "curso")
+    @JsonIgnore
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
     private List<Turma> turmaList;
 
-    @OneToMany(mappedBy = "curso")
+    @JsonIgnore
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
     private List<CursoMateria> cursoMateriaList;
 
     public Integer getCdCurso() {
@@ -58,11 +62,11 @@ public class Curso {
         this.nmCurso = nmCurso;
     }
 
-    public Integer getNmPeriodo() {
+    public String getNmPeriodo() {
         return nmPeriodo;
     }
 
-    public void setNmPeriodo(Integer nmPeriodo) {
+    public void setNmPeriodo(String nmPeriodo) {
         this.nmPeriodo = nmPeriodo;
     }
 

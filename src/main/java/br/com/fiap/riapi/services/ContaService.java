@@ -28,8 +28,7 @@ public class ContaService {
     Map<String, Object> responseMap = new HashMap<>();
 
     public Optional<Conta> findById(Integer cdConta) {
-        Optional<Conta> teste = contaRepository.findById(cdConta);
-        return teste;
+        return contaRepository.findById(cdConta);
 
     }
 
@@ -41,7 +40,7 @@ public class ContaService {
 
         if (contaRepository.findByDsEmail(conta.getDsEmail(), cdConta).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
-            responseMap.put("message", "email document");
+            responseMap.put("message", "duplicated email");
         } else if (contaRepository.findByDsDocumento(conta.getDsDocumento(), cdConta).size() > 0) {
             responseMap.put("status", HttpStatus.BAD_REQUEST);
             responseMap.put("message", "duplicated document");
@@ -87,5 +86,9 @@ public class ContaService {
         }
         save(newConta);
         return null;
+    }
+
+    public String oauth(String email, String senha) {
+        return contaRepository.getPasswordByEmail(email).equals(senha) ? "authenticated" : "notAuthenticated";
     }
 }
