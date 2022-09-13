@@ -14,6 +14,7 @@ A funcionalidade principal foi quebrada em algumas partes para ficar melhor de p
 | :---------- | :--------- |
 |`Gravação do áudio via react native pelo usuário.`|`70%`|
 |`API em java para receber o áudio e enviá-lo para a nuvem pela API-GOOGLE-DRIVE.`|`80%`|
+|`API em Python que realizará o download da API-GOOGLE-DRIVE.`|`100%`|
 |`Speech-To-Text para transformar o áudio em texto.`|`100%`|
 |`IA que classifica qual nota o aluno deu para aula do professor.`|`20%`|
 |`Retorno dessas informações para API em java e ela realizará a gravação no banco de dados.`|`80%`|
