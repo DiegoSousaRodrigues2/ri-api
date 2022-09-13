@@ -13,21 +13,13 @@ A funcionalidade principal foi quebrada em algumas partes para ficar melhor de p
 | Descrição   | Porcentagem|
 | :---------- | :--------- |
 |`Gravação do áudio via react native pelo usuário.`|`70%`|
-|`API em java para receber o áudio e enviá-lo para a nuvem pela API-GOOGLE-DRIVE.`|`80%`|
-|`API em Python que realizará o download da API-GOOGLE-DRIVE.`|`100%`|
-|`Speech-To-Text para transformar o áudio em texto.`|`100%`|
-|`IA que classifica qual nota o aluno deu para aula do professor.`|`20%`|
-|`Retorno dessas informações para API em java e ela realizará a gravação no banco de dados.`|`80%`|
+|`API em java para receber o áudio e enviá-lo para a nuvem pela API-GOOGLE-DRIVE.`||`80%`|
+|`Speech-To-Text para transformar o áudio em texto.`||`100%`|
+|`IA que classifica qual nota o aluno deu para aula do professor.`||`20%`|
+|`Retorno dessas informações para API em java e ela realizará a gravação no banco de dados.`||`80%`|
 
 ### Funcionalidade extra
 E para treino dessa IA e verificar a vitalidade e accuracy dela iremos realizar a criação de um cron para que a cada certo período de tempo ele requisite para API em java as informações de texto e nota e possa fazer o treino
 
 
-
-
-## Roadmap
-
-- Melhorar o suporte de navegadores
-
-- Adicionar mais integrações
 
