@@ -3,6 +3,17 @@
 
 A funcionalidade principal foi quebrada em algumas partes para ficar melhor de projetar, mas em texto corrido nossa funcionalidade principal é um usuário gravar um áudio avaliando a aula de um professor pela aplicação em react native que se comunicará com nossa API em java que realizará o upload desse arquivo no GOOGLE-DRIVE pela API do mesmo e salvará o id e nome desse arquivo em nosso banco de dados para que quando chamada a API em python não seja necessário passar o arquivo por completo e sim somente um id que a mesma realizará o download do arquivo e passará para um Speech-to-text que transformará esse áudio em um texto, e assim passará para um IA classificar a nota que esse aluno deu para aula do professor, após esses passos retornará o texto e a nota para API em java que salvará essas informações adicionais na base de dados.
 
+# Nome do grupo: RateIt
+#### Integrantes
+
+- [@Diego Sousa Rodrigues - RM87910](https://www.github.com/DiegoSousaRodrigues2)
+- [@Emily Keyt Manfrin - RM87198](https://www.github.com/e-manfrin)
+- [@Gabriel Rodrigues Cordeiro - RM87265](https://github.com/GabrielCordeiro2412)
+- [@Giovana Nelo Furlan - RM88936](https://www.github.com/giovanafurlan)
+- [@Heloisa Beatriz de Oliveira Costa - RM85589](https://www.github.com/Helloisa22)
+- [@Glória Maria Ribeiro Souza - RM 88613](https://www.github.com/glorinha)
+
+
 # Tabela dos endpoints
  
 - [Tablela](https://endpoints-nu.vercel.app)
