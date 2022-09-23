@@ -88,7 +88,20 @@ public class ContaService {
         return null;
     }
 
-    public String oauth(String email, String senha) {
-        return contaRepository.getPasswordByEmail(email).equals(senha) ? "authenticated" : "notAuthenticated";
+    public Map<String, Object> oauth(String email, String senha) {
+        String oauthEmail = contaRepository.getPasswordByEmail(email);
+        if(oauthEmail == null){
+            responseMap.put("Status", HttpStatus.NOT_FOUND);
+            responseMap.put("Message", "Email not found");
+        }else{
+            if(oauthEmail.equals(senha)){
+                responseMap.put("Status", HttpStatus.OK);
+                responseMap.put("Message", "Authorized");
+            }else{
+                responseMap.put("Status", HttpStatus.UNAUTHORIZED);
+                responseMap.put("Message", "Not Authorized");
+            }
+        }
+        return responseMap;
     }
 }

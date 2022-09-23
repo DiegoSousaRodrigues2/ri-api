@@ -54,7 +54,7 @@ public class ContaController {
     }
 
     @GetMapping("oauth")
-    public String update(@RequestParam @Valid String email, @RequestParam String senha){
+    public Map<String, Object> update(@RequestParam @Valid String email, @RequestParam String senha){
         return contaService.oauth(email, senha);
     }
 }
