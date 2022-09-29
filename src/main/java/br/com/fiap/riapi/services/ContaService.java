@@ -95,7 +95,7 @@ public class ContaService {
             responseMap.put("Message", "Email not found");
         }else{
             if(oauthEmail.equals(senha)){
-                return contaRepository.findByDsEmail(email);
+                return contaRepository.findByDsEmail(email).get(0);
             }else{
                 responseMap.put("Status", HttpStatus.UNAUTHORIZED);
                 responseMap.put("Message", "Not Authorized");
