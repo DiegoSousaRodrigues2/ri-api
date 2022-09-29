@@ -17,4 +17,7 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
 
     @Query("select c.dsSenha from Conta c where c.dsEmail = ?1")
     String getPasswordByEmail(String email);
+
+    @Query("select c from Conta c where c.dsEmail = ?1")
+    List<Conta> findByDsEmail(String dsEmail);
 }
