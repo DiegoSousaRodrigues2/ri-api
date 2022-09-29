@@ -34,21 +34,18 @@ public class AvaliacaoDiariaService {
         return emailAluno + "." + materia + "." + month + "." + day + "." + year;
     }
 
-    public String verifyType(String fileName) {
+    public String verifyType(String fileName, MultipartFile file) {
 
-        if (!fileName.endsWith(".wav")) {
-
-        }
         return "ok";
     }
 
-    public void save(MultipartFile arquivo, String fileName) {
+    public void save(MultipartFile file, String fileName) {
         Path path = Paths.get("./src/main/java/br/com/fiap/riapi/files");
         Path realPath = path.resolve(fileName + ".png");
 
         try {
             Files.createDirectories(path);
-            arquivo.transferTo(realPath);
+            file.transferTo(realPath);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
