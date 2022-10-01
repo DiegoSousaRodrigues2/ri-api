@@ -29,7 +29,7 @@ public class CursoMateriaController {
 
     @PostMapping("create")
     public ResponseEntity<CursoMateria> create(@RequestBody CursoMateria cursoMateria){
-        cursoMateriaService.create(cursoMateria);
+        cursoMateriaService.save(cursoMateria);
         return ResponseEntity.status(HttpStatus.OK).body(cursoMateria);
     }
 

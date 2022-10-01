@@ -53,4 +53,9 @@ public class MateriaController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @PostMapping("associarMateriaCurso")
+    public ResponseEntity<Object> associarMateriaCurso(@RequestParam Integer cdMateria, @RequestParam Integer cdCurso){
+        return materiaService.associarMateriaCurso(cdMateria, cdCurso);
+    }
+
 }
