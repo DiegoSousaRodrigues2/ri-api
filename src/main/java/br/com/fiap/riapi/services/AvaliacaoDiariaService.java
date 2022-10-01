@@ -19,11 +19,11 @@ public class AvaliacaoDiariaService {
     AvaliacaoDiariaRepository avaliacaoDiariaRepository;
 
     public void saveFile(MultipartFile file, String emailAluno, String materia) {
-        String fileName = encriptName(emailAluno, materia);
+        String fileName = encryptName(emailAluno, materia);
         save(file, fileName);
     }
 
-    public String encriptName(String emailAluno, String materia) {
+    public String encryptName(String emailAluno, String materia) {
         Date data = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(data);
@@ -32,11 +32,6 @@ public class AvaliacaoDiariaService {
         int year = cal.get(Calendar.YEAR);
 
         return emailAluno + "." + materia + "." + month + "." + day + "." + year;
-    }
-
-    public String verifyType(String fileName, MultipartFile file) {
-
-        return "ok";
     }
 
     public void save(MultipartFile file, String fileName) {

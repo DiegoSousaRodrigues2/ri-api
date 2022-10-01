@@ -1,6 +1,7 @@
 package br.com.fiap.riapi.services;
 
 import br.com.fiap.riapi.domains.Curso;
+import br.com.fiap.riapi.domains.CursoMateria;
 import br.com.fiap.riapi.domains.Materia;
 import br.com.fiap.riapi.repository.MateriaRepository;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +22,12 @@ public class MateriaService {
 
     @Autowired
     MateriaRepository materiaRepository;
+
+    @Autowired
+    CursoService cursoService;
+
+    @Autowired
+    CursoMateriaService cursoMateriaService;
 
     Map<String, Object> responseMap = new HashMap<>();
 
@@ -55,5 +62,18 @@ public class MateriaService {
 
         save(newMateria);
         return null;
+    }
+
+
+    public ResponseEntity<Object> associarMateriaCurso(Integer cdMateria, Integer cdCurso) {
+        Optional<Materia> materia = findById(cdMateria);
+
+        if(materia.isEmpty()){
+            responseMap.put("status", HttpStatus.NOT_FOUND);
+            responseMap.put("message", "Materia not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
+        }
+
+        return cursoMateriaService.associarMateriaCurso(materia.get(), cdCurso);
     }
 }

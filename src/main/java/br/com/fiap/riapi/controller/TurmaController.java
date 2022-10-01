@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("turma")
 public class TurmaController {
@@ -17,7 +19,7 @@ public class TurmaController {
     @Autowired
     TurmaService turmaService;
 
-    @GetMapping
+    @GetMapping("/")
     public Page<Turma> listAll(@PageableDefault Pageable pageable){
         return turmaService.listAll(pageable);
     }
@@ -28,9 +30,18 @@ public class TurmaController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<Object> create(@RequestBody Turma turma){
-        turmaService.save(turma);
-        return ResponseEntity.status(HttpStatus.OK).body(turma);
+    public ResponseEntity<Object> create(@RequestParam String nmTurma, @RequestParam Integer cdCurso){
+        return turmaService.createTurma(nmTurma, cdCurso);
+    }
+
+    @PostMapping("associate")
+    public ResponseEntity<Object> associarTurmaAluno(@RequestParam Integer turmaId, @RequestParam Integer contaId){
+        return turmaService.associarTurmaAluno(turmaId, contaId);
+    }
+
+    @GetMapping("listTurmasByConta")
+    public ResponseEntity<Object> listTurmasByConta(@RequestParam Integer contaId){
+        return turmaService.listTurmasByConta(contaId);
     }
 
 }
