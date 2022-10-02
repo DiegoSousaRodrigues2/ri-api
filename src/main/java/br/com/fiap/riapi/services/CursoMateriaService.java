@@ -45,7 +45,7 @@ public class CursoMateriaService {
     }
 
     public ResponseEntity<Object> associarMateriaCurso(Materia materia, Integer cdCurso) {
-        Optional<Curso> curso = cursoService.getById(cdCurso);
+        Optional<Curso> curso = cursoService.findById(cdCurso);
         if(curso.isEmpty()){
             responseMap.put("status", HttpStatus.NOT_FOUND);
             responseMap.put("message", "Curso not found");

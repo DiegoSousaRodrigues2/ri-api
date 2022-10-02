@@ -29,7 +29,6 @@ public class ContaService {
 
     public Optional<Conta> findById(Integer cdConta) {
         return contaRepository.findById(cdConta);
-
     }
 
     public Page<Conta> listAll(Pageable pageable) {

@@ -22,9 +22,9 @@ public class CursoController {
     @Autowired
     CursoService cursoService;
 
-    @GetMapping("getById")
+    @GetMapping("findById")
     public Optional<Curso> findById(@RequestParam @Valid Integer cdCurso){
-        return cursoService.getById(cdCurso);
+        return cursoService.findById(cdCurso);
     }
 
     @GetMapping
@@ -58,7 +58,7 @@ public class CursoController {
 
     @DeleteMapping("delete")
     public ResponseEntity<Curso> delete(@RequestParam Integer cdCurso){
-        Optional<Curso> optionalCurso = cursoService.getById(cdCurso);
+        Optional<Curso> optionalCurso = cursoService.findById(cdCurso);
 
         if (optionalCurso.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 

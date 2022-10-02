@@ -22,7 +22,7 @@ public class CursoService {
 
     Map<String, Object> responseMap = new HashMap<>();
 
-    public Optional<Curso> getById(Integer cdCurso) {
+    public Optional<Curso> findById(Integer cdCurso) {
         return cursoRepository.findById(cdCurso);
     }
 
@@ -49,7 +49,7 @@ public class CursoService {
     }
 
     public ResponseEntity<Object> update(Curso curso, Integer cdCurso) {
-        Optional<Curso> cursoOptional = getById(cdCurso);
+        Optional<Curso> cursoOptional = findById(cdCurso);
         if(cursoOptional.isEmpty()){
             responseMap.put("status", HttpStatus.NOT_FOUND);
             responseMap.put("message", "not found");

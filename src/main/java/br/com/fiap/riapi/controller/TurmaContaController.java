@@ -22,8 +22,8 @@ public class TurmaContaController {
         return turmaContaService.findAll(pageable);
     }
 
-    @GetMapping("getById")
-    public ResponseEntity<TurmaConta> getById(@RequestParam Integer cdTurmaConta){
+    @GetMapping("findById")
+    public ResponseEntity<TurmaConta> findById(@RequestParam Integer cdTurmaConta){
         return ResponseEntity.of(turmaContaService.findById(cdTurmaConta));
     }
 

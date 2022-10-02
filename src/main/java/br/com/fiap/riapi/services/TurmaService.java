@@ -42,12 +42,12 @@ public class TurmaService {
         turmaRepository.save(turma);
     }
 
-    public Optional<Turma> getById(Integer cdTurma) {
+    public Optional<Turma> findById(Integer cdTurma) {
         return turmaRepository.findById(cdTurma);
     }
 
     public ResponseEntity<Object> associarTurmaAluno(Integer turmaId, Integer contaId) {
-        Optional<Turma> turma = getById(turmaId);
+        Optional<Turma> turma = findById(turmaId);
         if (turma.isEmpty()) {
             responseMap.put("status", HttpStatus.NOT_FOUND);
             responseMap.put("message", "Turma Not Found");
@@ -83,7 +83,7 @@ public class TurmaService {
 
     public ResponseEntity<Object> createTurma(String nmTurma, Integer cdCurso) {
         Turma turma = new Turma();
-        Optional<Curso> curso = cursoService.getById(cdCurso);
+        Optional<Curso> curso = cursoService.findById(cdCurso);
 
         if(curso.isEmpty()){
             responseMap.put("status", HttpStatus.NOT_FOUND);

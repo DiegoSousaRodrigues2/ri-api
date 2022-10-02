@@ -13,6 +13,11 @@ public class Sala {
     public Sala() {
     }
 
+    public Sala(Conta conta, Materia materia) {
+        this.conta = conta;
+        this.materia = materia;
+    }
+
     @Id
     @Column(name = "cd_sala", nullable = false, precision = 3)
     @GeneratedValue(generator = "sala", strategy = GenerationType.SEQUENCE)
