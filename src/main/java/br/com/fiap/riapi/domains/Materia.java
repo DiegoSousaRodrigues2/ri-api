@@ -44,7 +44,7 @@ public class Materia {
 
     @JsonIgnore
     @OneToMany(mappedBy = "materia")
-    private List<AvaliacaoDiaria> avaliacaoDiariaList;
+    private List<Sala> salas;
 
     public Integer getCdMateria() {
         return cdMateria;
@@ -76,5 +76,14 @@ public class Materia {
 
     public void setCursoMateriaList(List<CursoMateria> cursoMateriaList) {
         this.cursoMateriaList = cursoMateriaList;
+    }
+
+    public List<Sala> getSalas() {
+        return salas;
+    }
+
+    public Materia setSalas(List<Sala> salas) {
+        this.salas = salas;
+        return this;
     }
 }

@@ -1,7 +1,5 @@
 package br.com.fiap.riapi.services;
 
-import br.com.fiap.riapi.repository.AvaliacaoDiariaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,10 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Service
-public class AvaliacaoDiariaService {
-
-    @Autowired
-    AvaliacaoDiariaRepository avaliacaoDiariaRepository;
+public class FeedbackService {
 
     public void saveFile(MultipartFile file, String emailAluno, String materia) {
         String fileName = encryptName(emailAluno, materia);
