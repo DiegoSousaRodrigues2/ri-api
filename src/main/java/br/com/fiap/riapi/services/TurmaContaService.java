@@ -1,5 +1,6 @@
 package br.com.fiap.riapi.services;
 
+import br.com.fiap.riapi.domains.Sala;
 import br.com.fiap.riapi.domains.TurmaConta;
 import br.com.fiap.riapi.repository.TurmaContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +32,13 @@ public class TurmaContaService {
 
     public List<TurmaConta> listTurmasByConta(Integer contaId) {
         return turmaContaRepository.listTurmaContaById(contaId);
+    }
+
+    public List<Object> getSalaListByTurmaId(Integer turmaId){
+        return turmaContaRepository.getSalaListByTurmaId(turmaId);
+    }
+
+    public List<Sala> getSalaListByTurmaIdAndAlunId(Integer turmaId, Integer contaId){
+        return turmaContaRepository.getSalaListByContaId(turmaId, contaId);
     }
 }

@@ -1,9 +1,7 @@
 package br.com.fiap.riapi.services;
 
-import br.com.fiap.riapi.domains.Conta;
-import br.com.fiap.riapi.domains.Instituicao;
-import br.com.fiap.riapi.domains.Materia;
-import br.com.fiap.riapi.domains.Sala;
+import br.com.fiap.riapi.domains.*;
+import br.com.fiap.riapi.models.ListSalaContaTurma;
 import br.com.fiap.riapi.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,21 +10,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SalaService {
 
     @Autowired
     SalaRepository salaRepository;
-
     @Autowired
     ContaService contaService;
-
     @Autowired
     MateriaService materiaService;
+    @Autowired
+    TurmaContaService turmaContaService;
+    @Autowired
+    TurmaService turmaService;
 
     Map<String, Object> responseMap = new HashMap<>();
 
@@ -52,7 +50,7 @@ public class SalaService {
         return ResponseEntity.status(HttpStatus.CREATED).body(sala);
     }
 
-    public void save(Sala sala){
+    public void save(Sala sala) {
         salaRepository.save(sala);
     }
 
@@ -62,5 +60,36 @@ public class SalaService {
 
     public Optional<Sala> findById(Integer cdSala) {
         return salaRepository.findById(cdSala);
+    }
+
+    public ResponseEntity<Object> getByTurmaId(Integer turmaId) {
+        Optional<Turma> turma = turmaService.findById(turmaId);
+        if (turma.isEmpty()) {
+            responseMap.put("status", HttpStatus.NOT_FOUND);
+            responseMap.put("message", "turma Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
+        }
+
+        List<Object> salaListByTurmaId = turmaContaService.getSalaListByTurmaId(turmaId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(salaListByTurmaId);
+    }
+
+    public ResponseEntity<Object> getByTurmaIdAndContaId(Integer turmaId, Integer contaId) {
+        Optional<Turma> turma = turmaService.findById(turmaId);
+        if (turma.isEmpty()) {
+            responseMap.put("status", HttpStatus.NOT_FOUND);
+            responseMap.put("message", "turma Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
+        }
+
+        Optional<Conta> conta = contaService.findById(contaId);
+        if (conta.isEmpty()) {
+            responseMap.put("status", HttpStatus.NOT_FOUND);
+            responseMap.put("message", "conta Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(turmaContaService.getSalaListByTurmaIdAndAlunId(turmaId, contaId));
     }
 }
