@@ -72,11 +72,87 @@ public class Conta implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
-    private List<AvaliacaoDiaria> avaliacaoDiariaList = new ArrayList<AvaliacaoDiaria>();
+    private List<Sala> salaList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
+    private List<Feedback> feedbackList;
 
     @ManyToOne
     @JoinColumn(name = "cd_instituicao", nullable = false)
     private Instituicao instituicao;
+
+    public Integer getCdConta() {
+        return cdConta;
+    }
+
+    public Conta setCdConta(Integer cdConta) {
+        this.cdConta = cdConta;
+        return this;
+    }
+
+    public String getNmConta() {
+        return nmConta;
+    }
+
+    public Conta setNmConta(String nmConta) {
+        this.nmConta = nmConta;
+        return this;
+    }
+
+    public String getDsEmail() {
+        return dsEmail;
+    }
+
+    public Conta setDsEmail(String dsEmail) {
+        this.dsEmail = dsEmail;
+        return this;
+    }
+
+    public String getDsSenha() {
+        return dsSenha;
+    }
+
+    public Conta setDsSenha(String dsSenha) {
+        this.dsSenha = dsSenha;
+        return this;
+    }
+
+    public String getDsDocumento() {
+        return dsDocumento;
+    }
+
+    public Conta setDsDocumento(String dsDocumento) {
+        this.dsDocumento = dsDocumento;
+        return this;
+    }
+
+    public Date getDtNascimento() {
+        return dtNascimento;
+    }
+
+    public Conta setDtNascimento(Date dtNascimento) {
+        this.dtNascimento = dtNascimento;
+        return this;
+    }
+
+    public Boolean getStConta() {
+        return stConta;
+    }
+
+    public Conta setStConta(Boolean stConta) {
+        this.stConta = stConta;
+        return this;
+    }
+
+    public String getDsTipoConta() {
+        return dsTipoConta;
+    }
+
+    public Conta setDsTipoConta(String dsTipoConta) {
+        this.dsTipoConta = dsTipoConta;
+        return this;
+    }
 
     public List<TurmaConta> getTurmaContaList() {
         return turmaContaList;
@@ -87,84 +163,21 @@ public class Conta implements Serializable {
         return this;
     }
 
-    public List<AvaliacaoDiaria> getAvaliacaoDiariaList() {
-        return avaliacaoDiariaList;
+    public List<Sala> getSalaList() {
+        return salaList;
     }
 
-    public Conta setAvaliacaoDiariaList(List<AvaliacaoDiaria> avaliacaoDiariaList) {
-        this.avaliacaoDiariaList = avaliacaoDiariaList;
+    public Conta setSalaList(List<Sala> salaList) {
+        this.salaList = salaList;
         return this;
-    }
-
-    public Integer getCdConta() {
-        return cdConta;
-    }
-
-    public void setCdConta(Integer cdConta) {
-        this.cdConta = cdConta;
-    }
-
-    public String getNmConta() {
-        return nmConta;
-    }
-
-    public void setNmConta(String nmConta) {
-        this.nmConta = nmConta;
-    }
-
-    public String getDsEmail() {
-        return dsEmail;
-    }
-
-    public void setDsEmail(String dsEmail) {
-        this.dsEmail = dsEmail;
-    }
-
-    public String getDsSenha() {
-        return dsSenha;
-    }
-
-    public void setDsSenha(String dsSenha) {
-        this.dsSenha = dsSenha;
-    }
-
-    public String getDsDocumento() {
-        return dsDocumento;
-    }
-
-    public void setDsDocumento(String dsDocumento) {
-        this.dsDocumento = dsDocumento;
-    }
-
-    public Date getDtNascimento() {
-        return dtNascimento;
-    }
-
-    public void setDtNascimento(Date dtNascimento) {
-        this.dtNascimento = dtNascimento;
-    }
-
-    public Boolean getStConta() {
-        return stConta;
-    }
-
-    public void setStConta(Boolean stConta) {
-        this.stConta = stConta;
-    }
-
-    public String getDsTipoConta() {
-        return dsTipoConta;
-    }
-
-    public void setDsTipoConta(String dsTipoConta) {
-        this.dsTipoConta = dsTipoConta;
     }
 
     public Instituicao getInstituicao() {
         return instituicao;
     }
 
-    public void setInstituicao(Instituicao instituicao) {
+    public Conta setInstituicao(Instituicao instituicao) {
         this.instituicao = instituicao;
+        return this;
     }
 }

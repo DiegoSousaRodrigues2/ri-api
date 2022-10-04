@@ -21,8 +21,8 @@ public class ContaController {
     @Autowired
     ContaService contaService;
 
-    @GetMapping("getById")
-    public Optional<Conta> getById(@RequestParam @Valid Integer cdConta){
+    @GetMapping("findById")
+    public Optional<Conta> findById(@RequestParam @Valid Integer cdConta){
         return contaService.findById(cdConta);
     }
 

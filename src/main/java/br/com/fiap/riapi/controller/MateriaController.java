@@ -1,6 +1,5 @@
 package br.com.fiap.riapi.controller;
 
-import br.com.fiap.riapi.domains.Curso;
 import br.com.fiap.riapi.domains.Materia;
 import br.com.fiap.riapi.services.MateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,8 @@ public class MateriaController {
     @Autowired
     MateriaService materiaService;
 
-    @GetMapping("getById")
-    public ResponseEntity<Materia> getById(@RequestParam Integer cdMateria){
+    @GetMapping("findById")
+    public ResponseEntity<Materia> findById(@RequestParam Integer cdMateria){
         return ResponseEntity.of(materiaService.findById(cdMateria));
     }
 

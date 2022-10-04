@@ -18,20 +18,26 @@ public class Instituicao implements Serializable {
     }
 
     //Construtor sem id
-    public Instituicao(String nmInstituicao, String nrCnpj, String ds_plano, String dsToken) {
+
+
+    public Instituicao(String nmInstituicao, String nrCnpj, String dsPlano, String dsToken, String dsSenha) {
         this.nmInstituicao = nmInstituicao;
         this.nrCnpj = nrCnpj;
-        this.dsPlano = ds_plano;
+        this.dsPlano = dsPlano;
         this.dsToken = dsToken;
+        this.dsSenha = dsSenha;
     }
 
     //Construtor completo
-    public Instituicao(Integer cdInstituicao, String nmInstituicao, String nrCnpj, String ds_plano, String dsToken) {
+
+
+    public Instituicao(Integer cdInstituicao, String nmInstituicao, String nrCnpj, String dsPlano, String dsToken, String dsSenha) {
         this.cdInstituicao = cdInstituicao;
         this.nmInstituicao = nmInstituicao;
         this.nrCnpj = nrCnpj;
-        this.dsPlano = ds_plano;
+        this.dsPlano = dsPlano;
         this.dsToken = dsToken;
+        this.dsSenha = dsSenha;
     }
 
     @Id
@@ -48,8 +54,11 @@ public class Instituicao implements Serializable {
     @Column(name = "ds_plano", nullable = true, length = 50)
     private String dsPlano;
 
-    @Column(name = "ds_token", nullable = false, length = 6, unique = true)
+    @Column(name = "ds_token", nullable = false, unique = true)
     private String dsToken;
+
+    @Column(name = "ds_senha", nullable = false)
+    private String dsSenha;
 
     @JsonIgnore
     @OneToMany(mappedBy = "instituicao", cascade = CascadeType.ALL)
@@ -101,5 +110,14 @@ public class Instituicao implements Serializable {
 
     public void setContaList(List<Conta> contaList) {
         this.contaList = contaList;
+    }
+
+    public String getDsSenha() {
+        return dsSenha;
+    }
+
+    public Instituicao setDsSenha(String dsSenha) {
+        this.dsSenha = dsSenha;
+        return this;
     }
 }

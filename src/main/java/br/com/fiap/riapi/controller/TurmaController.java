@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("turma")
@@ -24,9 +21,9 @@ public class TurmaController {
         return turmaService.listAll(pageable);
     }
 
-    @GetMapping("getById")
-    public ResponseEntity<Turma> getById(@RequestParam Integer cdTurma){
-        return ResponseEntity.of(turmaService.getById(cdTurma));
+    @GetMapping("findById")
+    public ResponseEntity<Turma> findById(@RequestParam Integer cdTurma){
+        return ResponseEntity.of(turmaService.findById(cdTurma));
     }
 
     @PostMapping("create")

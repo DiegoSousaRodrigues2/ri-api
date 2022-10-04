@@ -21,16 +21,19 @@ public class InstituicaoController {
     @Autowired
     private InstituicaoService instituicaoService;
 
+    @GetMapping("teste")
+    public int teste(@RequestParam Integer numero1, @RequestParam Integer numero2){
+        return numero1 - numero2;
+    }
+
     @GetMapping("")
-    public Page<Instituicao> getAll(@PageableDefault(size = 10) Pageable pageable) {
+    public Page<Instituicao> listAll(@PageableDefault(size = 10) Pageable pageable) {
         Page<Instituicao> instituicaos = instituicaoService.listAll(pageable);
-
         instituicaos.getSize();
-
         return instituicaos;
     }
 
-    @GetMapping("getById")
+    @GetMapping("findById")
     public Optional<Instituicao> findById(@RequestParam @Valid Integer id){
         return instituicaoService.findById(id);
     }
