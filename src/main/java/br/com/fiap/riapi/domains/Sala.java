@@ -13,7 +13,8 @@ public class Sala {
     public Sala() {
     }
 
-    public Sala(Conta conta, Materia materia) {
+    public Sala(Turma turma, Conta conta, Materia materia) {
+        this.turma = turma;
         this.conta = conta;
         this.materia = materia;
     }
@@ -24,6 +25,10 @@ public class Sala {
     private Integer cdSala;
 
     @ManyToOne
+    @JoinColumn(name = "cd_turma", nullable = false)
+    Turma turma;
+
+    @ManyToOne
     @JoinColumn(name = "cd_conta", nullable = false)
     private Conta conta;
 
@@ -32,7 +37,7 @@ public class Sala {
     private Materia materia;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "sala")
+    @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Feedback> feedbackList;
 
     public Integer getCdSala() {
@@ -59,6 +64,24 @@ public class Sala {
 
     public Sala setMateria(Materia materia) {
         this.materia = materia;
+        return this;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public Sala setTurma(Turma turma) {
+        this.turma = turma;
+        return this;
+    }
+
+    public List<Feedback> getFeedbackList() {
+        return feedbackList;
+    }
+
+    public Sala setFeedbackList(List<Feedback> feedbackList) {
+        this.feedbackList = feedbackList;
         return this;
     }
 }

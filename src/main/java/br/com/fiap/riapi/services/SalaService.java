@@ -25,10 +25,12 @@ public class SalaService {
     TurmaContaService turmaContaService;
     @Autowired
     TurmaService turmaService;
+    @Autowired
+    FeedbackService feedbackService;
 
     Map<String, Object> responseMap = new HashMap<>();
 
-    public ResponseEntity<Object> create(Integer cdConta, Integer cdMateria) {
+    public ResponseEntity<Object> create(Integer cdConta, Integer cdMateria, Integer turmaId) {
         Optional<Conta> conta = contaService.findById(cdConta);
         if (conta.isEmpty()) {
             responseMap.put("status", HttpStatus.NOT_FOUND);
@@ -43,7 +45,14 @@ public class SalaService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
         }
 
-        Sala sala = new Sala(conta.get(), materia.get());
+        Optional<Turma> turma = turmaService.findById(turmaId);
+        if (turma.isEmpty()) {
+            responseMap.put("status", HttpStatus.NOT_FOUND);
+            responseMap.put("message", "Materia Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMap);
+        }
+
+        Sala sala = new Sala(turma.get(), conta.get(), materia.get());
 
         save(sala);
 
@@ -60,6 +69,10 @@ public class SalaService {
 
     public Optional<Sala> findById(Integer cdSala) {
         return salaRepository.findById(cdSala);
+    }
+
+    public Sala getFeedbackList(Integer cdSala) {
+        return salaRepository.getFeedbackList(cdSala).get(0);
     }
 
     public ResponseEntity<Object> getByTurmaId(Integer turmaId) {
