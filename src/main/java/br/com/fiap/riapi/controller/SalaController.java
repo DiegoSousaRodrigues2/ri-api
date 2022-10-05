@@ -56,6 +56,9 @@ public class SalaController {
 
     }
 
-
+    @GetMapping("findSalaByContaId")
+    public ResponseEntity<Object> findSalaByContaId(@RequestParam Integer contaId){
+        return salaService.findSalaByContaId(contaId);
+    }
 
 }

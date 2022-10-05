@@ -105,4 +105,9 @@ public class SalaService {
 
         return ResponseEntity.status(HttpStatus.OK).body(turmaContaService.getSalaListByTurmaIdAndAlunId(turmaId, contaId));
     }
+
+    public ResponseEntity<Object> findSalaByContaId(Integer contaId) {
+        List<Sala> sala = salaRepository.findSalaByContaId(contaId);
+        return ResponseEntity.status(HttpStatus.OK).body(sala);
+    }
 }
