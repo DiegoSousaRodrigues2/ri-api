@@ -1,5 +1,4 @@
 package br.com.fiap.riapi.domains;
-
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -32,7 +31,7 @@ public class Feedback {
     @JoinColumn(name = "cd_aluno", nullable = false)
     private Conta conta;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cd_sala")
     private Sala sala;
 
